@@ -6,12 +6,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 a, b = 1000, 1
 alpha = 20000
 p0 = 2000
 g = 9.807
 m = 220
+
 
 def f(x):
     return np.array([
@@ -20,28 +20,27 @@ def f(x):
         x[1]
     ])
 
-def expl_trape():
+
+def expl_trap():
     dt = 0.0046425
-    time = np.arange (0, 2, dt)
-    x= np.array([0,0,0])
+    time = np.arange(0, 2, dt)
+    x = np.array([0, 0, 0])
     x_trajectory = []
     for t in time:  
         xa = x + dt * f(x)
         xb = xa + dt * f(xa)
         x = x + 0.5 * dt * f(xa +xb)
         x_trajectory.append(x)
-
-
     x_trajectory = np.array(x_trajectory)
-    plt.subplot(3,1,1)
-    plt.plot(time, x_trajectory[:,0] )
+    plt.subplot(3, 1, 1)
+    plt.plot(time, x_trajectory[:, 0])
     plt.ylabel('Tension (N)')
     plt.subplot(3,1,2)
-    plt.plot(time, x_trajectory[:,1])
+    plt.plot(time, x_trajectory[:, 1])
     plt.ylabel('Velocity (m/s)')
     plt.subplot(3,1,3)
-    plt.plot(time,x_trajectory[:,2])
+    plt.plot(time,x_trajectory[:, 2])
     plt.show()
 
 
-expl_trape()
+expl_trap()
