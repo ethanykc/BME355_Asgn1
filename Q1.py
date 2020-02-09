@@ -3,6 +3,7 @@
 # b) Simulate this oscillator using Euler’s method, with a time step of 0.05s, for 10s. \
 # Plot the state vs. time. Write all the code from scratch using Numpy.
 
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
@@ -34,6 +35,7 @@ def euler(dt):
 	plt.show()
 
 
+# c) Implement the RK4 integration method. Simulate for 10 s with a timestep of 0.05 s
 def rk4_update(dt):
 
 	times = np.arange(0, 10, dt)
@@ -62,6 +64,9 @@ def rk4_update(dt):
 def g(t,x):
 	return np.matmul([[0, -1], [1, 0]], x)
 
+
+# d) Simulate the system using solve_ivp
+# Simulate for 10s with a timestep of 0.05s
 def use_ivp():
 	sol = solve_ivp(g, [0, 10], [1, 0], max_step=.05)
 	plt.plot(sol.t, sol.y.T)
@@ -69,10 +74,25 @@ def use_ivp():
 	plt.show()
 
 
-dts = [1, 0.5, 0.25, 0.125, 0.0625, 0.0375, \
-		0.01875, 0.009285, 0.0046425, 0.00232125]
+def find_timestep(method):
 
-for i in range(len(dts)):
-	plt.figure(i)
-	# euler(dts[i])
-	rk4_update(dts[i])
+	dts = [1, 0.5, 0.25, 0.125, 0.0625, 0.0375, \
+			0.01875, 0.009285, 0.0046425, 0.00232125]
+
+	if method == "euler":
+		for i in range(len(dts)):
+			plt.figure(i)
+			title_eulers = 'Simulation of Oscillator using Euler\'s method (dt = {})'.format(dts[i])
+			plt.title(title_eulers)
+			euler(dts[i])
+
+	elif method == "rk4":
+		for i in range(len(dts)):
+			plt.figure(i)
+			title_rk4 = 'Simulation of Oscillator using RK-4 method (dt = {})'.format(dts[i])
+			plt.title(title_rk4)
+			rk4_update(dts[i])
+
+
+if __name__ == "__main__":
+	find_timestep(*sys.argv[1:])

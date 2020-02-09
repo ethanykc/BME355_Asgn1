@@ -7,7 +7,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Question Setup from writing-simulation-code-2020.pdf on learn
+# Question Setup from writing-simulation-code-2020
 a, b = 1000, 1
 alpha = 20000
 p0 = 2000
@@ -15,7 +15,8 @@ g = 9.807
 m = 220
 
 
-# Define dynamic equations from file on learn
+# Define dynamic equations from writing-simulation-code-2020
+# 3D mass/Hill-muscle system
 def f(x):
 	return np.array([
 		alpha * (x[1] + b * (p0 - x[0]) / (x[0] + a)),
@@ -27,15 +28,16 @@ def f(x):
 # Function created for explicit trapezoid integration method
 def expl_trap():
 	dt = 0.001 # time step
-	time = np.arange(0, 5, dt)  # time range for 2 secconds
+	time = np.arange(0, 2, dt)  # time range for 2 secconds
 	x = np.array([0, 0, 0])  # initial state is x = [0, 0 , 0]
 	x_trajectory = []
 	# implement the explicit trapezoid integration method
 	for t in time:
-		xa = x + dt * f(x)
-		xb = xa + dt * f(xa)
-		x = x + 0.5 * dt * f(xa + xb)
+		xa = f(x + dt * x)
+		xb = f(x + dt * xa)
+		x = x + 0.5 * dt * (xa + xb)
 		x_trajectory.append(x)
+
 	# Plot the state vs time graphs for the three dynamic equations
 	x_trajectory = np.array(x_trajectory)
 	plt.subplot(3, 1, 1)
