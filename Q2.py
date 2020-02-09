@@ -26,8 +26,8 @@ def f(x):
 
 # Function created for explicit trapezoid integration method
 def expl_trap():
-	dt = 0.0046425  # time step
-	time = np.arange(0, 2, dt)  # time range for 2 secconds
+	dt = 0.001 # time step
+	time = np.arange(0, 5, dt)  # time range for 2 secconds
 	x = np.array([0, 0, 0])  # initial state is x = [0, 0 , 0]
 	x_trajectory = []
 	# implement the explicit trapezoid integration method
