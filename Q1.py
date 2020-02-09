@@ -78,7 +78,7 @@ def find_timestep(method):
 
 	dts = [1, 0.5, 0.25, 0.125, 0.0625, 0.03125, \
 			0.015625, 0.0078125, 0.00390625, 0.001953125]
-
+	
 	if method == "euler":
 		for i in range(len(dts)):
 			plt.figure(i)

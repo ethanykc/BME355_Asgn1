@@ -4,6 +4,7 @@
 # Implement the Explicit Trapezoid Integration method from scratch.
 # Find a suitable time step and plot state vs time for 2s.
 
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -26,11 +27,12 @@ def f(x):
 
 
 # Function created for explicit trapezoid integration method
-def expl_trap():
-	dt = 0.001 # time step
+def expl_trap(dt):
+	
 	time = np.arange(0, 2, dt)  # time range for 2 secconds
 	x = np.array([0, 0, 0])  # initial state is x = [0, 0 , 0]
 	x_trajectory = []
+
 	# implement the explicit trapezoid integration method
 	for t in time:
 		xa = f(x + dt * x)
@@ -51,4 +53,17 @@ def expl_trap():
 	plt.show()
 
 
-expl_trap()
+def find_timestep():
+
+    dts = [1, 0.5, 0.25, 0.125, 0.0625, 0.03125, \
+          0.015625, 0.0078125, 0.00390625, 0.001953125]
+
+    for i in range(len(dts)):
+        plt.figure(i)
+        title_trap = 'Simulation of Oscillator using Explicit Trapezoid method (dt = {})'.format(dts[i])
+        plt.suptitle(title_trap)
+        expl_trap(dts[i])
+
+
+if __name__ == "__main__":
+    find_timestep(*sys.argv[1:])
