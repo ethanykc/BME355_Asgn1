@@ -17,6 +17,10 @@ m = 220
 
 # Define dynamic equations for 3D mass/Hill-muscle system
 def f(x):
+	"""
+	x: state vector
+	returns: derivative of x
+	"""
 	return np.array([
 		alpha * (x[1] + b * (p0 - x[0]) / (x[0] + a)),
 		g - x[0] / m,
@@ -24,8 +28,12 @@ def f(x):
 	])
 
 
-# Function created for explicit trapezoid integration method
 def expl_trap(dt):
+	"""
+	dt: timestep to run simulation on
+	
+	saves plots as .png for each timestep in dts
+	"""
 	time = np.arange(0, 2, dt)  # time range for 2 secconds
 	x = np.array([0, 0, 0])  # initial state is x = [0, 0, 0]
 	x_trajectory = []
@@ -52,7 +60,9 @@ def expl_trap(dt):
 
 
 def find_timestep():
-
+	"""
+	saves plots as .png for each timestep in dts
+	"""
 	dts = [1, 0.5, 0.25, 0.125, 0.0625, 0.03125, \
 		   0.015625, 0.0078125, 0.00390625, 0.001953125]
 

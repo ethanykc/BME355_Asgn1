@@ -9,13 +9,22 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
 
-# function for the derivative of state vector
 def f(x):
+	"""
+	x: state vector
+	returns: derivative of x
+	"""
 	return np.matmul([[0, -1], [1, 0]], x)
 
 
 # Implementation of Euler's method for given system
 def euler(dt):
+	"""
+	dt: timestep to run simulation on 
+	
+	plots state vs. time using Euler's method
+	"""
+
 	times = np.arange(0, 10, dt)
 	x_trajectory = []
 	t = 0
@@ -34,6 +43,12 @@ def euler(dt):
 
 # c) Implement the RK4 integration method. Simulate for 10 s with a timestep of 0.05 s
 def rk4_update(dt):
+	"""
+	dt: timestep to run simulation on 
+	
+	plots state vs. time using RK4 method
+	"""
+
 	times = np.arange(0, 10, dt)
 	x_trajectory = []
 	t = 0
@@ -56,12 +71,21 @@ def rk4_update(dt):
 # callable function for solve_ivp method
 # includes t as parameter
 def g(t,x):
+	"""
+	t: time parameter used for solve_ivp
+	x: state vector
+	
+	returns: derivative of x
+	"""
 	return np.matmul([[0, -1], [1, 0]], x)
 
 
 # d) Simulate the system using solve_ivp
 # Simulate for 10s with a timestep of 0.05s
 def use_ivp():
+	"""
+	plots state vs. time using scipy.integrate.solve_ivp method
+	"""
 	sol = solve_ivp(g, [0, 10], [1, 0], max_step=.05)
 	plt.plot(sol.t, sol.y.T)
 	plt.xlabel('Time (s)')
@@ -69,6 +93,11 @@ def use_ivp():
 
 
 def find_timestep(method):
+	"""
+	method: string of which integration method to use
+	
+	saves plots as .png for each timestep in dts
+	"""
 
 	dts = [1, 0.5, 0.25, 0.125, 0.0625, 0.03125, \
 			0.015625, 0.0078125, 0.00390625, 0.001953125]
@@ -94,5 +123,6 @@ def find_timestep(method):
 			plt.close()
 
 
+# from cmd, find_timestep is the main function called with arguments of which integration method
 if __name__ == "__main__":
 	find_timestep(*sys.argv[1:])
