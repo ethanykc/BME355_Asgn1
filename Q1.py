@@ -16,28 +16,24 @@ def f(x):
 
 # Implementation of Euler's method for given system
 def euler(dt):
-	times = []
-	trajectory = []
+	times = np.arange(0, 10, dt)
+	x_trajectory = []
 	t = 0
-	x = np.array([1, 1])
-	# dt = 0.0625
-	for i in range(int(10 / dt)):
-		times.append(t)
-		trajectory.append(x)
+	x = np.array([1, 0])
+
+	for t in times:
+		x_trajectory.append(x)
 		t = t + dt
 		x = x + f(x) * dt
 
-	plt.plot(times, trajectory)
-
+	plt.plot(times, x_trajectory)
 	plt.xlabel('Time (s)')
 	plt.ylabel('State')
 	plt.tight_layout()
-	plt.show()
 
 
 # c) Implement the RK4 integration method. Simulate for 10 s with a timestep of 0.05 s
 def rk4_update(dt):
-
 	times = np.arange(0, 10, dt)
 	x_trajectory = []
 	t = 0
@@ -46,17 +42,15 @@ def rk4_update(dt):
 	for t in times:
 		s1 = f(x)
 		s2 = f(x + 0.5 * dt * s1)
-		s3 = f(x + 0.5 * dt *s2)
+		s3 = f(x + 0.5 * dt * s2)
 		s4 = f(x + dt * s3)
 		x = x + dt * (s1 + (2 * s2) + (2 * s3) + s4) / 6
 		x_trajectory.append(x)
 
 	plt.plot(times, x_trajectory)
-
 	plt.xlabel('Time (s)')
 	plt.ylabel('State')
 	plt.tight_layout()
-	plt.show()
 
 
 # callable function for solve_ivp method
@@ -85,6 +79,9 @@ def find_timestep(method):
 			title_eulers = 'Simulation of Oscillator using Euler\'s method (dt = {})'.format(dts[i])
 			plt.title(title_eulers)
 			euler(dts[i])
+			fig_name = 'q1_plots/q1e_euler_t_{}.png'.format(i)
+			plt.savefig(fig_name)
+			plt.close()
 
 	elif method == "rk4":
 		for i in range(len(dts)):
@@ -92,6 +89,9 @@ def find_timestep(method):
 			title_rk4 = 'Simulation of Oscillator using RK-4 method (dt = {})'.format(dts[i])
 			plt.title(title_rk4)
 			rk4_update(dts[i])
+			fig_name = 'q1_plots/q1e_rk4_t_{}.png'.format(i)
+			plt.savefig(fig_name)
+			plt.close()
 
 
 if __name__ == "__main__":
